@@ -7,15 +7,19 @@ interface ButtonProps {
   children: ReactNode;
   size?: "small" | "medium" | "large";
   primary?: boolean;
+  white?: boolean; // Ajoutez cette ligne
+  outline?: boolean; // Ajoutez cette ligne si vous avez l'intention d'utiliser la propriété 'outline'
   [x: string]: any;
 }
 
-const StyledButton = styled.button<ButtonProps>`
+export const ButtonStyle = css<ButtonProps>`
   border: 0;
   padding: 5px 15px;
   border-radius: 5px;
   cursor: pointer;
   display: inline-flex;
+  align-items: center;
+
   svg {
     height: 16px;
     margin-right: 5px;
@@ -38,15 +42,15 @@ const StyledButton = styled.button<ButtonProps>`
       border: 1px solid #fff;
     `}
 
-  ${(props) =>
+${(props) =>
     props.primary &&
     css`
       background-color: #5542f6;
       border: 1px solid #5542f6;
       color: #fff;
     `}
-  
-    ${(props) =>
+
+  ${(props) =>
     props.size === "large" &&
     css`
       font-size: 1.2rem;
@@ -55,6 +59,10 @@ const StyledButton = styled.button<ButtonProps>`
         height: 20px;
       }
     `}
+`;
+
+const StyledButton = styled.button<ButtonProps>`
+  ${ButtonStyle}
 `;
 
 export default function Button({

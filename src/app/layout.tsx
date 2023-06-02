@@ -2,10 +2,12 @@
 
 import { Inter } from "next/font/google";
 import { createGlobalStyle } from "styled-components";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
+
+// Note: @import url removed from createGlobalStyle.
 const GlobalStyles = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
   body {
     padding: 0;
     margin: 0;
@@ -20,6 +22,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+        />
+      </Head>
       <GlobalStyles />
       <body className={inter.className}>{children}</body>
     </html>

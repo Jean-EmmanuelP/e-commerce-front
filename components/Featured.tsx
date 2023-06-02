@@ -13,6 +13,7 @@ const Bg = styled.div`
 const Title = styled.h1`
   margin: 0;
   font-weight: normal;
+  font-size: 3rem;
 `;
 
 const Description = styled.p`
@@ -22,7 +23,7 @@ const Description = styled.p`
 
 const ColumnsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   img {
     max-width: 100%;
@@ -37,25 +38,32 @@ const Column = styled.div`
 const ButtonWrapper = styled.div`
   display: flex;
   gap: 10px;
+  margin-top: 25px;
 `;
 
-export default function Featured() {
+interface Product {
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+  images: string[];
+  category: string;
+  __v: number;
+}
+
+interface FeaturedProps {
+  product: Product | null;
+}
+
+export default function Featured({ product }: FeaturedProps) {
   return (
     <Bg>
       <Center>
         <ColumnsWrapper>
           <Column>
             <div>
-              <Title>Pro anywhere</Title>
-              <Description>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-              </Description>
+              <Title>{product && product.title}</Title>
+              <Description>{product && product.description}</Description>
               <ButtonWrapper>
                 <Button outline white>
                   Read More
