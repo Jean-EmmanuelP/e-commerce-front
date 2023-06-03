@@ -1,7 +1,11 @@
-import Link from "next/link"
+import Link from "next/link";
+import styled from "styled-components";
+import { ButtonStyle } from "./Button";
 
-export default function ButtonLink(props) {
-    return (
-        <Link {...props}/>
-    )
+const StyledLink = styled(Link)`
+  ${ButtonStyle}
+`;
+
+export default function ButtonLink(props : any) {
+  return <StyledLink {...props} />;
 }

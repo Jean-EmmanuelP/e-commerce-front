@@ -9,9 +9,10 @@ const inter = Inter({ subsets: ["latin"] });
 // Note: @import url removed from createGlobalStyle.
 const GlobalStyles = createGlobalStyle`
   body {
+    background-color: #f0f0f0;
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 `;
 
@@ -25,7 +26,7 @@ export default function RootLayout({
       <Head>
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
         />
       </Head>
       <GlobalStyles />
