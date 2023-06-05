@@ -20,8 +20,8 @@ export const ButtonStyle = css<ButtonProps>`
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  text-decoration:none;
-  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
 
   svg {
@@ -45,9 +45,32 @@ export const ButtonStyle = css<ButtonProps>`
       color: #fff;
       border: 1px solid #fff;
     `}
+    ${(props) =>
+    props.black &&
+    !props.outline &&
+    css`
+      background-color: #000;
+      color: #fff;
+    `}
+  
+    ${(props) =>
+    props.black &&
+    props.outline &&
+    css`
+      background-color: transparent;
+      color: #000;
+      border: 1px solid #000;
+    `}
 
-${(props) =>
-    props.primary && !props.outline &&
+    ${(props) =>
+    props.block &&
+    css`
+      display: block;
+      width: 100%;
+    `}
+    ${(props) =>
+    props.primary &&
+    !props.outline &&
     css`
       background-color: ${primary};
       border: 1px solid ${primary};
@@ -55,12 +78,13 @@ ${(props) =>
     `}
 
     ${(props) =>
-      props.primary && props.outline &&
-      css`
-        background-color: transparent;
-        border: 1px solid ${primary};
-        color: ${primary};
-      `}
+    props.primary &&
+    props.outline &&
+    css`
+      background-color: transparent;
+      border: 1px solid ${primary};
+      color: ${primary};
+    `}
   ${(props) =>
     props.size === "large" &&
     css`
