@@ -38,24 +38,38 @@ export default function CartPage() {
         <ColumnsWrapper>
           <Box>
             {!cartProducts?.length && <div>You cart is empty</div>}
-            {products?.length > 0 && (
-              <>
-                <h2>Cart</h2>
-                {products.map((product: any) => (
-                  <div>
-                    {cartProducts.filter((id) => id === product._id).length >
-                    1 ? (
-                      <>
-                        {product.title}{" "}
-                        (x{cartProducts.filter((id) => id === product._id).length})
-                      </>
-                    ) : (
-                      <>{product.title}</>
-                    )}
-                  </div>
-                ))}
-              </>
-            )}
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {products?.length > 0 && (
+                  <tr>
+                    {products.map((product: any) => (
+                      <div>
+                        {cartProducts.filter((id) => id === product._id)
+                          .length > 1 ? (
+                          <>
+                            {product.title} (x
+                            {
+                              cartProducts.filter((id) => id === product._id)
+                                .length
+                            }
+                            )
+                          </>
+                        ) : (
+                          <>{product.title}</>
+                        )}
+                      </div>
+                    ))}
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </Box>
           {!!cartProducts?.length && (
             <Box>
