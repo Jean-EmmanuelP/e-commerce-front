@@ -12,12 +12,14 @@ type CartContextProviderProps = {
 
 type CartContextType = {
   addProduct: (productId: string) => void;
+  removeProduct: (productId: string) => void;
   cartProducts: string[];
   setCartProducts: React.Dispatch<SetStateAction<string[]>>;
 };
 
 export const CartContext = createContext<CartContextType>({
   addProduct: () => {},
+  removeProduct: () => {},
   cartProducts: [],
   setCartProducts: () => {},
 });
@@ -43,8 +45,20 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   function addProduct(productId: any) {
     setCartProducts((prev) => [...prev, productId]);
   }
+  function removeProduct(productId: any) {
+    setCartProducts((prev) => {
+      const pos = prev.indexOf(productId);
+      if (pos !== -1) {
+        return prev.filter((value, index) => index !== pos);
+      } else {
+        return [...prev];
+      }
+    });
+  }
   return (
-    <CartContext.Provider value={{ cartProducts, setCartProducts, addProduct }}>
+    <CartContext.Provider
+      value={{ cartProducts, setCartProducts, addProduct, removeProduct }}
+    >
       {children}
     </CartContext.Provider>
   );
