@@ -13,6 +13,7 @@ type CartContextProviderProps = {
 type CartContextType = {
   addProduct: (productId: string) => void;
   removeProduct: (productId: string) => void;
+  clearProducts: () => void;
   cartProducts: string[];
   setCartProducts: React.Dispatch<SetStateAction<string[]>>;
 };
@@ -20,6 +21,7 @@ type CartContextType = {
 export const CartContext = createContext<CartContextType>({
   addProduct: () => {},
   removeProduct: () => {},
+  clearProducts: () => {},
   cartProducts: [],
   setCartProducts: () => {},
 });
@@ -33,7 +35,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
   }, []);
 
   useEffect(() => {
-    if (hasMounted) {
+    if (hasMounted && !window.location.href.includes("success")) {
       const localData = window.localStorage.getItem("cart");
       setCartProducts(localData ? JSON.parse(localData) : []);
     }
@@ -60,9 +62,20 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     });
   }
 
+  function clearProducts() {
+    console.log(`came here also`);
+    setCartProducts([]);
+  }
+
   return (
     <CartContext.Provider
-      value={{ cartProducts, setCartProducts, addProduct, removeProduct }}
+      value={{
+        cartProducts,
+        setCartProducts,
+        addProduct,
+        removeProduct,
+        clearProducts,
+      }}
     >
       {children}
     </CartContext.Provider>

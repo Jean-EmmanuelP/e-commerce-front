@@ -60,7 +60,8 @@ interface Product {
 }
 
 export default function CartPage() {
-  const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
+  const { cartProducts, addProduct, removeProduct, clearProducts } =
+    useContext(CartContext);
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [name, setName] = useState("");
@@ -89,7 +90,12 @@ export default function CartPage() {
       setProducts([]);
     }
   }, [cartProducts]);
-
+  useEffect(() => {
+    console.log('came here');
+    if (window.location.href.includes("success")) {
+      clearProducts();
+    }
+  }, []);
   function moreOfThisProduct(id: any) {
     addProduct(id);
   }
