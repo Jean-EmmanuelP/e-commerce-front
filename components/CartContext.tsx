@@ -25,26 +25,30 @@ export const CartContext = createContext<CartContextType>({
 });
 
 export function CartContextProvider({ children }: CartContextProviderProps) {
-  const localData = localStorage.getItem("cart");
-  const defaultProduct = localData ? JSON.parse(localData) : [];
-  const [cartProducts, setCartProducts] = useState<string[]>(() => {
-    return defaultProduct || [];
-  });
+  const [hasMounted, setHasMounted] = useState(false);
+  const [cartProducts, setCartProducts] = useState<string[]>([]);
+
   useEffect(() => {
-    if (cartProducts.length > 0) {
-      localStorage.setItem("cart", JSON.stringify(cartProducts));
-    }
-  }, [cartProducts]);
-  useEffect(() => {
-    if (localStorage && localStorage.getItem("cart")) {
-      if (localData) {
-        setCartProducts(JSON.parse(localData));
-      }
-    }
+    setHasMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (hasMounted) {
+      const localData = window.localStorage.getItem("cart");
+      setCartProducts(localData ? JSON.parse(localData) : []);
+    }
+  }, [hasMounted]);
+
+  useEffect(() => {
+    if (hasMounted) {
+      window.localStorage.setItem("cart", JSON.stringify(cartProducts));
+    }
+  }, [cartProducts, hasMounted]);
+
   function addProduct(productId: any) {
     setCartProducts((prev) => [...prev, productId]);
   }
+
   function removeProduct(productId: any) {
     setCartProducts((prev) => {
       const pos = prev.indexOf(productId);
@@ -55,6 +59,7 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       }
     });
   }
+
   return (
     <CartContext.Provider
       value={{ cartProducts, setCartProducts, addProduct, removeProduct }}
