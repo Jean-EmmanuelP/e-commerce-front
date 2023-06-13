@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -13,8 +15,13 @@ const ImageContainer = styled.div`
 
 const MainImage = styled.img`
   grid-column: span 4;
+  width: 600px;
+  height: 300px;
   max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 `;
+
 const ImageButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -32,30 +39,37 @@ const ImageButton = styled.img`
   border-radius: 5px;
 `;
 
-function switchImages() {
-
-}
-
 export default function ProductImage({ src }: ProductImageProps) {
   const [activeImage, setActiveImage] = useState(src[0]);
+  const [images, setImages] = useState(src);
+
+  const switchImages = (clickedImage: string, index: number) => {
+    const newImages = [...images];
+    newImages[0] = clickedImage;
+    newImages[index] = activeImage;
+    setImages(newImages);
+    setActiveImage(newImages[0]);
+  };
 
   return (
-    <ImageContainer>
-      {src.map((image, index) => {
-        if (index === 0) {
-          return <MainImage key={index} src={activeImage} alt="Product Main" />;
-        } else {
-          return (
-            <ImageButtonWrapper key={index}>
-              <ImageButton
-                src={image}
-                alt="Product"
-                onClick={() => setActiveImage(image)}
-              />
-            </ImageButtonWrapper>
-          );
-        }
-      })}
-    </ImageContainer>
+      <ImageContainer>
+        {images.map((image, index) => {
+          if (index === 0) {
+            return (
+              <MainImage key={index} src={activeImage} alt="Product Main" />
+            );
+          } else {
+            return (
+              <ImageButtonWrapper key={index}>
+                <ImageButton
+                  src={image}
+                  alt="Product"
+                  onClick={() => switchImages(image, index)}
+                />
+              </ImageButtonWrapper>
+            );
+          }
+        })}
+      </ImageContainer>
   );
 }
