@@ -21,7 +21,6 @@ export default function Home() {
           }
         });
     }
-
     if (isMounted) {
       fetch("/api/newProduct")
         .then((res) => res.json())
